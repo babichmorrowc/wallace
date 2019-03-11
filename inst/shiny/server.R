@@ -526,8 +526,9 @@ shinyServer(function(input, output, session) {
     # x <- callModule(mapPreds_MOD, 'c7_mapPreds', rvs)
     
     ncols <- ncol(rvs$modRes)
-    modRes.round <- cbind(rvs$modRes[,1:3], round(rvs$modRes[,4:ncols], digits=3))
-    nBinsCols <- ncols - 16
+    modRes.round <- cbind(rvs$modRes[,1:2], round(rvs$modRes[,3:ncols], digits=3))
+    modResBins.round <- cbind(e@results.grp[,1:3], round(e@results.grp[,4:7], digits=3))
+    
     # render both full model and partition avg datatable, and individual partition datatable
     output$evalTbls <- renderUI({
       tabsetPanel(
@@ -547,10 +548,10 @@ shinyServer(function(input, output, session) {
       )
       
     })
-    output$evalTbl <- DT::renderDataTable(modRes.round[,1:16], 
+    output$evalTbl <- DT::renderDataTable(modRes.round, 
                                           options = list(scrollX = TRUE,
                                                          sDom  = '<"top">rtp<"bottom">'))
-    output$evalTblBins <- DT::renderDataTable(modRes.round[,17:(nBinsCols+16)], 
+    output$evalTblBins <- DT::renderDataTable(modResBins.round, 
                                               options = list(scrollX = TRUE,
                                                              sDom  = '<"top">rtp<"bottom">'))
     output$lambdas <- renderPrint({

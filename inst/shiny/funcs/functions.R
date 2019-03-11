@@ -317,7 +317,8 @@ thresh <- function(modOccVals, type) {
 
 # plot ENMeval stats based on user selection ("value")
 evalPlot <- function(res, value) {
-  fc <- length(unique(res$features))
+  
+  fc <- length(unique(res$fc))
   col <- rainbow(fc)
   rm <- length(unique(res$rm))
   xlab <- "Regularization Multiplier"
@@ -344,7 +345,7 @@ evalPlot <- function(res, value) {
   axis(1, at= unique(res$rm))
   axis(2)
   box()
-  for (j in 1:length(unique(res$features))){
+  for (j in 1:length(unique(res$fc))){
     s <- ((fc*rm)-fc+j)
     points(res$rm[seq(j, s, fc)], y[seq(j, s, fc)], type="l", col=col[j])
     if (!is.null(variance)) {
@@ -356,7 +357,7 @@ evalPlot <- function(res, value) {
     }
   }
   points(res$rm, y, bg=col, pch=21)
-  legend("topright", legend=unique(res$features), pt.bg=col, pch=21, bg='white', cex=1, ncol=2)
+  legend("topright", legend=unique(res$fc), pt.bg=col, pch=21, bg='white', cex=1, ncol=2)
 }
 
 evalPlots <- function(results) {

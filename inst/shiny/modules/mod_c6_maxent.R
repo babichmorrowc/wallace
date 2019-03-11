@@ -98,8 +98,6 @@ maxent_MOD <- function(input, output, session, rvs) {
                               progbar = FALSE, updateProgress = updateProgress,
                               algorithm = input$algMaxent)
     
-    names(e@models) <- e@results$settings
-    
     if (rvs$clamp == T | rvs$algMaxent == "maxent.jar") {
       rvs %>% writeLog("Maxent ran successfully using", input$algMaxent, "and output evaluation results for", nrow(e@results), "clamped models.")
     } else if (rvs$clamp == F) {
