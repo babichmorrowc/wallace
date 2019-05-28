@@ -15,7 +15,7 @@
 # @examples
 #'
 #'
-# @return 
+# @return
 #' @author Gonzalo Pinilla gpinillabuitrago@@gradcenter.cuny.edu
 # @note
 # @seealso
@@ -27,7 +27,7 @@
 
 #' @export
 
-c4_drawBgExtent <- function(polyExtXY, polyExtID, drawBgBuf, occs, 
+c4_drawBgExtent <- function(polyExtXY, polyExtID, drawBgBuf, occs,
                             shinyLogs = NULL) {
   ptRem <- NULL
   occs.xy <- occs[c('longitude', 'latitude')]
@@ -39,15 +39,15 @@ c4_drawBgExtent <- function(polyExtXY, polyExtID, drawBgBuf, occs,
   if (ptRem == 0) {
     bgExt <- rgeos::gBuffer(newPoly, width = drawBgBuf)
     if (drawBgBuf == 0 ) {
-      shinyLogs %>% writeLog(em(spName(occs)), ' : Draw polygon without buffer(**).')
+      shinyLogs %>% writeLog(em(spName(occs)), ' : Draw polygon without a buffer.')
     } else {
-      shinyLogs %>% writeLog(em(spName(occs)), ' : Draw polygon with buffer of ', drawBgBuf, ' degrees (**).')
+      shinyLogs %>% writeLog(em(spName(occs)), ' : Draw polygon with a buffer of ', drawBgBuf, ' degrees.')
     }
     bgExt <- sp::SpatialPolygonsDataFrame(bgExt, data = data.frame(x=1), match.ID = FALSE)
     return(bgExt)
   } else if (ptRem > 0) {
-    shinyLogs %>% writeLog(type = 'error', 
-                           "The draw polygon did not include all localities(**). Remove the polygon before to draw a new one.")
+    shinyLogs %>% writeLog(type = 'error',
+                           "The draw polygon did not include all localities. Remove the polygon before to draw a new one.")
     return()
   }
 }
